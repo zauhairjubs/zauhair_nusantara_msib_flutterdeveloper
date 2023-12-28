@@ -9,11 +9,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/satoshi/Satoshi-Bold.otf
+          weight: 800
+        - asset: assets/fonts/satoshi/Satoshi-Medium.otf
+          weight: 500
+        - asset: assets/fonts/satoshi/Satoshi-Regular.otf
+          weight: 400
