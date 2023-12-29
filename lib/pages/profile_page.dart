@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/login_controller.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/user_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,10 +14,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final LoginController _loginController = Get.put(LoginController());
-
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final UserController userController = Get.put(UserController());
+    final LoginController _loginController = Get.put(LoginController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -83,32 +86,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 14,
                     ),
-                    Text(
-                      'Nama User',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                          color: whiteColor,
-                          fontFamily: 'assets/fonts/Kampenies_App.ttf'),
+                    Obx(
+                      () => Text(
+                        '${userController.user.value.name}',
+                        style: TextStyle(
+                            fontSize: screenHeight * 0.022,
+                            fontWeight: FontWeight.w900,
+                            color: whiteColor,
+                            fontFamily: 'assets/fonts/Kampenies_App.ttf'),
+                      ),
                     ),
                     SizedBox(
                       height: 14,
                     ),
                     Text(
-                      'KOPPIE',
+                      '${userController.user.value.email}',
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                          color: whiteColor,
-                          fontFamily: 'assets/fonts/Kampenies_App.ttf'),
-                    ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    Text(
-                      'agusraisa@mail.com',
-                      style: TextStyle(
-                          fontSize: 14,
+                          fontSize: screenHeight * 0.024,
                           fontWeight: FontWeight.normal,
                           color: Color(0xFFB7D0F7),
                           fontFamily: 'assets/fonts/Kampenies_App.ttf'),

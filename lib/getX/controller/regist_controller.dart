@@ -40,6 +40,9 @@ class RegistController extends GetxController {
       if (response.statusCode == 200) {
         Get.snackbar("Akun berhasil dibuat",
             "sekarang lakukan login dengan akun yang telah terdaftar");
+        Get.off(() => const LoginPage());
+      } else {
+        Get.snackbar("Register Failed", "Cobalah menggunakan email lain");
       }
     } catch (e) {
       print("Error : $e");
@@ -49,7 +52,6 @@ class RegistController extends GetxController {
   Future<void> register() async {
     if (formKeyRegister.currentState!.validate()) {
       _performRegister();
-      Get.off(() => const LoginPage());
     }
   }
 }
