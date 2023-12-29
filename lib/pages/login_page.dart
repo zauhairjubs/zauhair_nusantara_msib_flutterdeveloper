@@ -13,12 +13,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final LoginController _loginController = Get.put(LoginController());
+  late LoginController _loginController;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginController = Get.put(LoginController());
+    _loginController.formKeyLogin = GlobalKey<FormState>();
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: transparentColor,
@@ -39,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Form(
-                  key: _loginController.formKey,
+                  key: _loginController.formKeyLogin,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,18 +172,26 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     _loginController.login();
                   },
-                  child: Text(
-                    'Masuk',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500, color: whiteColor),
-                  ),
+                  child: _loginController.isLoading.value
+                      ? CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color?>(Colors.white),
+                        )
+                      : Text(
+                          'Masuk',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                        ),
                 ),
                 const SizedBox(height: 28),
                 InkWell(
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
                   onTap: () {
-                    Get.to(() => RegisterPage());
+                    Get.off(() => RegisterPage());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

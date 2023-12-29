@@ -7,12 +7,14 @@ import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/navbar.dart';
 
 class LoginController extends GetxController {
+  RxBool isLoading = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final RxBool passToggle = false.obs;
   final RxBool checkboxToggle = false.obs;
   final Dio _dio = Dio();
-  final formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKeyLogin =
+      GlobalKey<FormState>(debugLabel: '_login');
   RxBool isLoggedIn = false.obs;
 
   void togglePasswordVisibility() {
@@ -24,12 +26,12 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
-    if (formKey.currentState!.validate()) {
+    if (formKeyLogin.currentState!.validate()) {
       try {
         final token = await _performLogin();
         await _saveTokenToStorage(token);
-
-        Get.to(() => const Navbar());
+        isLoading.value = false;
+        Get.off(() => const Navbar());
       } catch (error) {
         // Tangani kesalahan
         print('Error: $error');
@@ -38,7 +40,7 @@ class LoginController extends GetxController {
   }
 
   Future<String> _performLogin() async {
-    // Lakukan login dan dapatkan token
+    isLoading.value = true;
     final response = await _dio.post(
         'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/login',
         data: {
@@ -71,15 +73,30 @@ class LoginController extends GetxController {
     return isLoggedIn.value;
   }
 
-  Future<void> logout() async {
-    await clearTokenFromStorage();
-    isLoggedIn.value = false;
-    Get.offAll(() => const LoginPage());
-  }
-
   Future<void> clearTokenFromStorage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
+  }
+
+  Future<void> logout() async {
+    final token = await getTokenFromStorage();
+    try {
+      final response = await _dio.delete(
+        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/user/logout',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        await clearTokenFromStorage();
+        isLoggedIn.value = false;
+        Get.off(() => const LoginPage());
+      }
+    } catch (e) {
+      print("Error : $e");
+    }
   }
 
   Future<void> confirmLogout() async {
@@ -93,6 +110,7 @@ class LoginController extends GetxController {
       textCancel: 'Batal',
       onConfirm: () async {
         await logout();
+        CircularProgressIndicator();
       },
     );
   }

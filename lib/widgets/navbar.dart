@@ -18,7 +18,7 @@ class _NavbarState extends State<Navbar> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 34,
-        selectedFontSize: 10,
+        selectedFontSize: 14,
         elevation: 10,
         currentIndex: selectedIndex,
         onTap: (index) {

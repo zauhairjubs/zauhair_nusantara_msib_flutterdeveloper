@@ -3,21 +3,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/regist_controller.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/pages/login_page.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
-
-final formKey = GlobalKey<FormState>();
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
-
-  static const routeName = "/regis-page";
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final RegistController _registController = Get.put(RegistController());
+  late RegistController _registController;
+
+  @override
+  void initState() {
+    super.initState();
+    _registController = Get.put(RegistController());
+    _registController.formKeyRegister = GlobalKey<FormState>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: blackColor,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.off(() => LoginPage()),
           highlightColor: transparentColor,
           splashColor: transparentColor,
         ),
@@ -58,10 +62,39 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               children: [
                 Form(
-                  key: formKey,
+                  key: _registController.formKeyRegister,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text('Nama',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _registController.nameController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          hintText: "Nama",
+                          hintStyle: TextStyle(color: greyColor),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(6)),
+                            borderSide: BorderSide(color: softGreyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: blueColor)),
+                          filled: true,
+                          fillColor: greyLightColor,
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Silahkan isi nama Anda';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
                       Text('Email',
                           style: Theme.of(context).textTheme.bodyMedium),
                       const SizedBox(height: 8),
@@ -181,11 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Gas login')),
-                      );
-                    }
+                    _registController.register();
                   },
                   child: Text(
                     'Daftar',
@@ -197,7 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 InkWell(
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Get.off(() => LoginPage()),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
