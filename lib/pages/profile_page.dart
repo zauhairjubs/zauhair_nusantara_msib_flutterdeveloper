@@ -1,19 +1,10 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/login_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  final LoginController _loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -194,6 +185,40 @@ class _ProfilePageState extends State<ProfilePage> {
                             Row(
                               children: [
                                 Icon(
+                                  Icons.language,
+                                  color: darkGreyColor,
+                                ),
+                                SizedBox(width: 12),
+                                Text(
+                                  'Bahasa',
+                                  style: TextStyle(
+                                      color: darkGreyColor, fontSize: 14),
+                                )
+                              ],
+                            ),
+                            Icon(
+                              Icons.keyboard_arrow_right,
+                              color: darkGreyColor,
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        Container(
+                          height: 1,
+                          width: double.infinity,
+                          decoration: BoxDecoration(color: greyLightColor),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
                                   Icons.star_border,
                                   color: darkGreyColor,
                                 ),
@@ -327,26 +352,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InkWell(
-                              splashColor: blueColor,
-                              highlightColor: blueColor,
-                              onTap: () {
-                                _loginController.confirmLogout();
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.logout,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(width: 12),
-                                  Text(
-                                    'Keluar',
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 14),
-                                  )
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(width: 12),
+                                Text(
+                                  'Keluar',
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 14),
+                                )
+                              ],
                             ),
                           ],
                         ),

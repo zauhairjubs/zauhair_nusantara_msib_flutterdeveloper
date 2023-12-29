@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/login_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/pages/login_page.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/pages/regis_page.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/navbar.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Get.put(LoginController());
+void main() {
+  runApp(const MainApp());
+}
 
-  String initialRoute;
-  if (await LoginController().checkTokenOnStart() == true) {
-    initialRoute = '/home';
-  } else {
-    initialRoute = '/';
-  }
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
-  runApp(
-    GetMaterialApp(
-      theme: lightTheme,
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: initialRoute,
-      getPages: [
-        GetPage(name: '/', page: () => const LoginPage()),
-        GetPage(name: '/home', page: () => const Navbar()),
-      ],
-    ),
-  );
+      home: const LoginPage(),
+      theme: lightTheme,
+      routes: {
+        RegisterPage.routeName: (context) => const RegisterPage(),
+      },
+    );
+  }
 }

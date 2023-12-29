@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/login_controller.dart';
 import 'regist_page.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/navbar.dart';
+
+final formKey = GlobalKey<FormState>();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,20 +14,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final LoginController _loginController = Get.put(LoginController());
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool passToggle = false;
+  bool checkboxToggle = false;
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: transparentColor,
         title: Center(
           child: Text(
             'Masuk',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: screenHeight * 0.03, fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         ),
         elevation: 0,
@@ -39,20 +43,17 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Form(
-                  key: _loginController.formKey,
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Email',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.02),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: _loginController.emailController,
+                        controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                             return 'Silahkan isi email';
                           }
                           if (!RegExp(r'\S+@\S+\.\S+').hasMatch(email)) {
-                            return 'Silahkan gunakan email yang sesuai';
+                            return 'Silahkan gunakan email yang benar';
                           }
                           return null;
                         },
@@ -81,15 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 16),
                       Text(
                         'Kata Sandi',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.02),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: _loginController.passwordController,
-                        obscureText: !_loginController.passToggle.value,
+                        controller: passwordController,
+                        obscureText: !passToggle,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
@@ -106,11 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                           suffixIcon: InkWell(
                             onTap: () {
                               setState(() {
-                                _loginController.togglePasswordVisibility();
+                                passToggle = !passToggle;
                               });
                             },
                             child: Icon(
-                                _loginController.passToggle.value
+                                passToggle
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: greyColor),
@@ -131,10 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         Checkbox(
-                          value: _loginController.checkboxToggle.value,
+                          value: checkboxToggle,
                           onChanged: (bool? newValue) {
                             setState(() {
-                              _loginController.toggleRememberMe();
+                              checkboxToggle = newValue!;
                             });
                           },
                           checkColor: whiteColor,
@@ -163,7 +161,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    _loginController.login();
+                    if (formKey.currentState!.validate()) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Navbar()));
+                    }
                   },
                   child: Text(
                     'Masuk',
@@ -176,23 +177,19 @@ class _LoginPageState extends State<LoginPage> {
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
                   onTap: () {
-                    Get.to(() => RegisterPage());
+                    Navigator.pushNamed(context, RegisterPage.routeName);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Belum mempunyai akun?',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: screenHeight * 0.021),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       SizedBox(width: 4),
                       Text(
                         'Daftar',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: screenHeight * 0.021,
                               fontWeight: FontWeight.w500,
                               color: darkBlueColor,
                             ),
