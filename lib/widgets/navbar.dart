@@ -27,8 +27,10 @@ class _NavbarState extends State<Navbar> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Beranda"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_max_rounded), label: "Beranda"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_rounded), label: "Profile")
         ],
         unselectedItemColor: Colors.grey,
         selectedItemColor: const Color(0xFF1570EF),
