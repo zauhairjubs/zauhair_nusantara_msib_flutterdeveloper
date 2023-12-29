@@ -2,7 +2,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/navbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,11 +37,6 @@ class _HomePageState extends State<HomePage> {
                             .headlineSmall
                             ?.copyWith(fontWeight: FontWeight.w700),
                       ),
-                      Image.asset(
-                        'images/pp.png',
-                        height: 48,
-                        width: 48,
-                      )
                     ],
                   ),
                 ),
@@ -69,10 +63,6 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SvgPicture.asset(
-                          'images/ilustration_banner.svg',
-                          height: screenHeight * 0.09,
-                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

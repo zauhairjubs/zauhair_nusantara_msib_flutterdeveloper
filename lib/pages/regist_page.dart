@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/regist_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 
 final formKey = GlobalKey<FormState>();
@@ -14,15 +16,8 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-//focus == border biru
-
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-  bool passToggle = false;
-  bool confirmPassToggle = false;
+  final RegistController _registController = Get.put(RegistController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +62,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Email',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      Text('Email',
+                          style: Theme.of(context).textTheme.bodyMedium),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: emailController,
+                        controller: _registController.emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -106,8 +99,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: passwordController,
-                        obscureText: !passToggle,
+                        controller: _registController.passwordController,
+                        obscureText: !_registController.passToggle.value,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
@@ -124,11 +117,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           suffixIcon: InkWell(
                             onTap: () {
                               setState(() {
-                                passToggle = !passToggle;
+                                _registController.togglePasswordVisibility();
                               });
                             },
                             child: Icon(
-                                passToggle
+                                _registController.passToggle.value
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: greyColor),
@@ -144,8 +137,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: confirmPasswordController,
-                        obscureText: !confirmPassToggle,
+                        controller: _registController.confirmPasswordController,
+                        obscureText: !_registController.confirmPassToggle.value,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
@@ -162,11 +155,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           suffixIcon: InkWell(
                             onTap: () {
                               setState(() {
-                                confirmPassToggle = !confirmPassToggle;
+                                _registController
+                                    .toggleConfirmPasswordVisibility();
                               });
                             },
                             child: Icon(
-                                confirmPassToggle
+                                _registController.confirmPassToggle.value
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: greyColor),
@@ -178,36 +172,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: false,
-                          onChanged: (value) {
-                            // Do something when the checkbox is checked or unchecked.
-                          },
-                          checkColor: whiteColor,
-                          fillColor: MaterialStateProperty.all(blueColor),
-                        ),
-                        Text(
-                          'Ingat Saya',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      'Lupa password?',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: darkBlueColor),
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
