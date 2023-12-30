@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/book_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ItemBook extends StatelessWidget {
+  final int id;
   final String title;
   final String subtitle;
   final String published;
 
   const ItemBook({
     Key? key,
+    required this.id,
     required this.title,
     required this.subtitle,
     required this.published,
@@ -16,6 +20,7 @@ class ItemBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BookController bookController = BookController();
     // final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
@@ -86,9 +91,14 @@ class ItemBook extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      SvgPicture.asset(
-                        "assets/images/remove_buku.svg",
-                        height: 28,
+                      InkWell(
+                        onTap: () {
+                          bookController.confirmDelete(id);
+                        },
+                        child: SvgPicture.asset(
+                          "assets/images/remove_buku.svg",
+                          height: 28,
+                        ),
                       )
                     ],
                   )

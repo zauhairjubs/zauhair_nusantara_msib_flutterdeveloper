@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     final UserController userController = Get.put(UserController());
     final BookController bookController = Get.put(BookController());
     userController.getUser();
+    bookController.fetchData();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -120,25 +121,39 @@ class _HomePageState extends State<HomePage> {
             Obx(
               () {
                 final Book? book = bookController.book.value;
-
-                if (book == null || book.data.isEmpty) {
-                  return Center(child: Text("Kamu Belum mengunggah buku "));
+                final bool isLoading = bookController.isLoading.value;
+                if (isLoading) {
+                  return Center(child: CircularProgressIndicator());
                 } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(20),
-                    itemCount: book.data.length,
-                    itemBuilder: (context, index) {
-                      final Datum data = book.data[index];
-                      final String timeAgo =
-                          timeago.format(data.published, locale: '');
-                      return ItemBook(
-                        title: data.title,
-                        subtitle: data.subtitle,
-                        published: timeAgo,
-                      );
-                    },
-                  );
+                  if (book == null || book.data.isEmpty) {
+                    return Center(
+                        child: Text(
+                            "List Buku Anda masih kosong, Unggah Segera!"));
+                  } else {
+                    return ListView.separated(
+                      reverse: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(20),
+                      itemCount: book.data.length,
+                      itemBuilder: (context, index) {
+                        final Datum data = book.data[index];
+                        final String timeAgo =
+                            timeago.format(data.published, locale: 'en');
+                        return ItemBook(
+                          id: data.id,
+                          title: data.title,
+                          subtitle: data.subtitle,
+                          published: timeAgo,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: screenHeight * 0.014,
+                        );
+                      },
+                    );
+                  }
                 }
               },
             ),
