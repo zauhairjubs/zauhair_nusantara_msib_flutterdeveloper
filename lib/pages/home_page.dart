@@ -1,8 +1,12 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 import 'package:get/get.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/book_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/user_controller.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:zauhair_nusantara_msib_flutterdeveloper/models/books.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/item_widget_book.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,86 +21,128 @@ class _HomePageState extends State<HomePage> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final UserController userController = Get.put(UserController());
+    final BookController bookController = Get.put(BookController());
     userController.getUser();
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            width: screenWidth,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 20, left: 20, top: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Text(
-                          'Hai, ${userController.user.value.name.split(" ").first.capitalizeFirst}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [blueColor, yellowColor]),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                color: blueColor,
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(right: 20, left: 20, top: 14, bottom: 30),
+                  child: Column(
                     children: [
-                      Text(
-                        'Mentor dan Creator Kampenies',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w700,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: screenWidth * 0.13,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Image.network(
+                                "https://randomuser.me/api/portraits/men/1.jpg"),
+                          ),
+                          SizedBox(
+                            width: screenWidth * 0.04,
+                          ),
+                          Obx(
+                            () => Text(
+                              'Hai, ${userController.user.value.name.split(" ").first.capitalizeFirst} !',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w700),
                             ),
+                          ),
+                        ],
                       ),
-                      InkWell(
-                        child: Text(
-                          'Lihat lainnya',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: blueColor),
+                      SizedBox(
+                        height: screenHeight * 0.03,
+                      ),
+                      SearchBar(
+                        side: const MaterialStatePropertyAll(
+                          BorderSide(color: lightBlueColor, width: 2),
+                        ),
+                        backgroundColor:
+                            const MaterialStatePropertyAll(bgEditTextColor),
+                        onChanged: (value) {},
+                        textStyle: MaterialStatePropertyAll(
+                            Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w100,
+                                  color: blueColor,
+                                )),
+                        hintText: "Cari Buku Anda",
+                        hintStyle: MaterialStatePropertyAll(
+                            Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w100,
+                                  color: greyColor,
+                                )),
+                        elevation: const MaterialStatePropertyAll(0),
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(45),
+                            ), // Mengatur border radius menjadi 10
+                          ),
+                        ),
+                        leading: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: const Icon(
+                            Icons.search,
+                            color: blueColor,
+                            size: 28,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Karyawan',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      InkWell(
-                        child: Text(
-                          'Lihat lainnya',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: blueColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.015,
-                ),
-              ],
+              ),
             ),
-          ),
+            Obx(
+              () {
+                final Book? book = bookController.book.value;
+
+                if (book == null || book.data.isEmpty) {
+                  return Center(child: Text("Kamu Belum mengunggah buku "));
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(20),
+                    itemCount: book.data.length,
+                    itemBuilder: (context, index) {
+                      final Datum data = book.data[index];
+                      final String timeAgo =
+                          timeago.format(data.published, locale: '');
+                      return ItemBook(
+                        title: data.title,
+                        subtitle: data.subtitle,
+                        published: timeAgo,
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

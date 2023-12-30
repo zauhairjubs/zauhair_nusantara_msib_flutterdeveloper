@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Text(
             'Masuk',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: screenHeight * 0.03, fontWeight: FontWeight.w500),
+                fontSize: screenHeight * 0.036, fontWeight: FontWeight.w500),
           ),
         ),
         elevation: 0,
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.02),
+                            .copyWith(fontSize: screenHeight * 0.024),
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.02),
+                            .copyWith(fontSize: screenHeight * 0.024),
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(fontSize: screenHeight * 0.021),
+                            .copyWith(fontSize: screenHeight * 0.024),
                       ),
                       SizedBox(width: 4),
                       Text(
