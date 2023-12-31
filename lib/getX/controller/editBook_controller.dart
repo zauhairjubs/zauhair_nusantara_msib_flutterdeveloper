@@ -15,36 +15,46 @@ class EditBookController extends GetxController {
   final descController = TextEditingController();
   final webController = TextEditingController();
 
+  // Convert regular variables to Rx variables
+  final RxString isbn = ''.obs;
+  final RxString title = ''.obs;
+  final RxString subtitle = ''.obs;
+  final RxString author = ''.obs;
+  final RxString published = ''.obs;
+  final RxString publisher = ''.obs;
+  final RxInt pages = 0.obs;
+  final RxString description = ''.obs;
+  final RxString website = ''.obs;
+
   final LoginController _loginController = LoginController();
 
   late GlobalKey<FormState> formKeyEditBook =
       GlobalKey<FormState>(debugLabel: '_addBook');
   final Dio _dio = Dio();
 
-  //input semuanya harus diisi, tidak boleh null, dan published = Datetime, pages = int
-
   Future<void> _performEdit(int id) async {
     try {
       final token = await _loginController.getTokenFromStorage();
 
       final response = await _dio.put(
-          'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/$id/edit',
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-            },
-          ),
-          data: {
-            'isbn': isbnController.text,
-            'title': titleController.text,
-            'subtitle': subtitleController.text,
-            'author': authorController.text,
-            'published': publishedController.text,
-            'publisher': publisherController.text,
-            'pages': pagesController.text,
-            'description': descController.text,
-            'website': webController.text
-          });
+        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/$id/edit',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+        data: {
+          'isbn': isbnController.text,
+          'title': titleController.text,
+          'subtitle': subtitleController.text,
+          'author': authorController.text,
+          'published': publishedController.text,
+          'publisher': publisherController.text,
+          'pages': pagesController.text,
+          'description': descController.text,
+          'website': webController.text
+        },
+      );
 
       if (response.statusCode == 200) {
         Get.snackbar("Buku Berhasil di edit", "");
@@ -74,7 +84,7 @@ class EditBookController extends GetxController {
       );
       final responseData = response.data;
 
-      // Set nilai kontrol formulir dengan data yang diterima
+      //controller.text
       isbnController.text = responseData['isbn'];
       titleController.text = responseData['title'];
       subtitleController.text = responseData['subtitle'];
@@ -84,8 +94,15 @@ class EditBookController extends GetxController {
       pagesController.text = responseData['pages'].toString();
       descController.text = responseData['description'];
       webController.text = responseData['website'];
+      //Rx
+      isbn.value = responseData['isbn'];
+      title.value = responseData['title'];
+      author.value = responseData['author'];
+      publisher.value = responseData['publisher'];
     } catch (error) {
       print('Gagal mendapatkan atau menggunakan respons: $error');
     }
+
+    print("FetchBookByid");
   }
 }

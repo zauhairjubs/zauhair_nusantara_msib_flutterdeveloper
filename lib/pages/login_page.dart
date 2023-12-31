@@ -26,16 +26,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 25, left: 20, right: 20),
+            padding:
+                const EdgeInsets.only(top: 25, left: 20, right: 20, bottom: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    height: screenHeight * 0.35,
+                    width: screenWidth,
                     child: SvgPicture.asset(
                       "assets/images/Ilustrasi_login.svg",
                       fit: BoxFit.cover,
@@ -44,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   'Masuk',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: screenHeight * 0.035,
+                      fontSize: screenWidth * 0.064,
                       fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 12),
@@ -180,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     'Masuk',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: screenHeight * 0.018,
+                          fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
@@ -201,13 +203,13 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(fontSize: screenHeight * 0.02),
+                            .copyWith(fontSize: screenWidth * 0.036),
                       ),
                       SizedBox(width: 4),
                       Text(
                         'Daftar',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: screenHeight * 0.022,
+                              fontSize: screenWidth * 0.04,
                               fontWeight: FontWeight.w500,
                               color: darkBlueColor,
                             ),
