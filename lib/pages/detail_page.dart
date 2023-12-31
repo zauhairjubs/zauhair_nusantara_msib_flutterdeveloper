@@ -3,17 +3,27 @@ import 'package:get/get.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/editBook_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final int book_id;
   const DetailPage({Key? key, required this.book_id}) : super(key: key);
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  late EditBookController bookController;
+
+  @override
+  void initState() {
+    super.initState();
+    bookController = Get.put(EditBookController());
+    bookController.fetchBookbyID(widget.book_id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final EditBookController bookController = Get.put(EditBookController());
-    bookController.fetchBookbyID(book_id);
-
-    DateTime date = DateTime.parse(bookController.publishedController.text);
 
     return Scaffold(
       body: Stack(
@@ -48,7 +58,7 @@ class DetailPage extends StatelessWidget {
                         height: screenHeight * 0.014,
                       ),
                       Text(
-                        "${bookController.authorController.text} - ${bookController.publisherController.text}",
+                        "ISBN ${bookController.isbnController.text}",
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             fontSize: 16, color: Colors.grey.shade600),
                       ),
@@ -56,9 +66,9 @@ class DetailPage extends StatelessWidget {
                         height: screenHeight * 0.014,
                       ),
                       Text(
-                        "${date.day.toString()} ${date.month.toString()} ${date.year.toString()}",
+                        "${bookController.authorController.text} - ${bookController.publisherController.text}",
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            fontSize: 14, color: Colors.grey.shade600),
+                            fontSize: 15, color: Colors.grey.shade600),
                       ),
                       SizedBox(
                         height: screenHeight * 0.02,

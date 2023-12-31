@@ -63,7 +63,6 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 Form(
                   key: _registController.formKeyRegister,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,6 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _registController.nameController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -100,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _registController.emailController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -133,6 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _registController.passwordController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         obscureText: !_registController.passToggle.value,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -171,6 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _registController.confirmPasswordController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         obscureText: !_registController.confirmPassToggle.value,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(

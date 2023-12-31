@@ -16,6 +16,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String searchQuery = "";
+
+  bool _isTitleMatch(Datum data) {
+    if (searchQuery.isEmpty) {
+      return true;
+    } else {
+      return data.title.toLowerCase().contains(searchQuery.toLowerCase());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -36,8 +46,8 @@ class _HomePageState extends State<HomePage> {
                     end: Alignment.bottomRight,
                     colors: [blueColor, yellowColor]),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
                 ),
                 color: blueColor,
               ),
@@ -84,13 +94,17 @@ class _HomePageState extends State<HomePage> {
                         ),
                         backgroundColor:
                             const MaterialStatePropertyAll(bgEditTextColor),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          setState(() {
+                            searchQuery = value;
+                          });
+                        },
                         textStyle: MaterialStatePropertyAll(
                             Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w100,
                                   color: blueColor,
                                 )),
-                        hintText: "Cari Buku Anda",
+                        hintText: "Cari List Buku Anda",
                         hintStyle: MaterialStatePropertyAll(
                             Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w100,
@@ -140,12 +154,17 @@ class _HomePageState extends State<HomePage> {
                         final Datum data = book.data[index];
                         final String timeAgo =
                             timeago.format(data.published, locale: 'en');
-                        return ItemBook(
-                          id: data.id,
-                          title: data.title,
-                          subtitle: data.subtitle,
-                          published: timeAgo,
-                        );
+                        if (_isTitleMatch(data)) {
+                          return ItemBook(
+                            id: data.id,
+                            title: data.title,
+                            subtitle: data.subtitle,
+                            published: timeAgo,
+                          );
+                        } else {
+                          // If it doesn't match the search query, return an empty container
+                          return Container();
+                        }
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return SizedBox(

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/login_controller.dart';
 import 'regist_page.dart';
@@ -26,17 +27,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: transparentColor,
-        title: Center(
-          child: Text(
-            'Masuk',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: screenHeight * 0.034, fontWeight: FontWeight.w500),
-          ),
-        ),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -44,9 +34,22 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                    height: screenHeight * 0.35,
+                    child: SvgPicture.asset(
+                      "assets/images/Ilustrasi_login.svg",
+                      fit: BoxFit.cover,
+                    )),
+                const SizedBox(height: 8),
+                Text(
+                  'Masuk',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontSize: screenHeight * 0.035,
+                      fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 12),
                 Form(
                   key: _loginController.formKeyLogin,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _loginController.emailController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -96,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _loginController.passwordController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         obscureText: !_loginController.passToggle.value,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -181,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                   ),
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: 24),
                 InkWell(
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
