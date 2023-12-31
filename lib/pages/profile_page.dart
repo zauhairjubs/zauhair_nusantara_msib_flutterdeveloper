@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          '${bookController.book.value!.data.length}',
+                                          '${bookController.countBooks}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w800,
                                               color: darkGreyColor,

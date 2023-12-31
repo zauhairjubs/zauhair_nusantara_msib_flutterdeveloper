@@ -10,6 +10,7 @@ import 'package:zauhair_nusantara_msib_flutterdeveloper/widgets/navbar.dart';
 class BookController extends GetxController {
   var book = Rx<Book?>(null);
   var isLoading = RxBool(false);
+  var countBooks = RxInt(0);
 
   final Dio _dio = Dio();
   final LoginController _loginController = LoginController();
@@ -29,6 +30,7 @@ class BookController extends GetxController {
       final responseData = response.data;
       final bookData = Book.fromJson(Map<String, dynamic>.from(responseData));
       book(bookData);
+      countBooks(bookData.data.length);
     } catch (error) {
       print('Gagal mendapatkan atau menggunakan respons: $error');
     } finally {
@@ -49,6 +51,7 @@ class BookController extends GetxController {
       );
       if (response.statusCode == 200) {
         Get.snackbar("Berhasil Menghapus Buku", "");
+        fetchData();
       }
     } catch (e) {
       print("Error : $e");
