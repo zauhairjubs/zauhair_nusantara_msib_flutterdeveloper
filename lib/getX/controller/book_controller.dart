@@ -18,7 +18,7 @@ class BookController extends GetxController {
     try {
       final token = await _loginController.getTokenFromStorage();
       final response = await _dio.get(
-        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books',
+        'https://book-crud-service-6dmqxfovfq-et.a.run.app/api/books/',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -49,7 +49,6 @@ class BookController extends GetxController {
       );
       if (response.statusCode == 200) {
         Get.snackbar("Berhasil Menghapus Buku", "");
-        Get.off(() => const Navbar());
       }
     } catch (e) {
       print("Error : $e");
@@ -69,6 +68,7 @@ class BookController extends GetxController {
         textCancel: 'Batal',
         onConfirm: () async {
           await deleteBook(book_id);
+          Get.offAll(() => const Navbar());
         });
   }
 }

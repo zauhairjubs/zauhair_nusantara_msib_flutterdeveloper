@@ -23,7 +23,7 @@ class _NavbarState extends State<Navbar> {
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
         iconSize: screenHeight * 0.046,
-        selectedFontSize: screenHeight * 0.018,
+        selectedFontSize: screenHeight * 0.02,
         elevation: 10,
         currentIndex: selectedIndex,
         onTap: (index) {

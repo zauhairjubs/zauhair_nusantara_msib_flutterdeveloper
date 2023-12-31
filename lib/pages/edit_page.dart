@@ -2,24 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/addBook_controller.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/editBook_controller.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 
-class AddPage extends StatefulWidget {
-  const AddPage({super.key});
+class EditPage extends StatefulWidget {
+  final int book_id;
+  const EditPage({super.key, required this.book_id});
 
   @override
-  State<AddPage> createState() => _AddPageState();
+  State<EditPage> createState() => _EditPageState();
 }
 
-class _AddPageState extends State<AddPage> {
-  late AddBookController addBookController;
+class _EditPageState extends State<EditPage> {
+  late EditBookController editBookController;
 
   @override
   void initState() {
     super.initState();
-    addBookController = Get.put(AddBookController());
-    addBookController.formKeyAddbook = GlobalKey<FormState>();
+    editBookController = Get.put(EditBookController());
+    editBookController.formKeyEditBook = GlobalKey<FormState>();
+    editBookController.fetchBookbyID(widget.book_id);
   }
 
   @override
@@ -36,7 +38,7 @@ class _AddPageState extends State<AddPage> {
         ),
         title: Center(
           child: Text(
-            'Upload Buku',
+            'Edit Buku',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -61,7 +63,7 @@ class _AddPageState extends State<AddPage> {
             child: Column(
               children: [
                 Form(
-                  key: addBookController.formKeyAddbook,
+                  key: editBookController.formKeyEditBook,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,7 +72,8 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.isbnController,
+                        controller: editBookController.isbnController,
+                        style: TextStyle(color: Colors.black),
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -78,13 +81,15 @@ class _AddPageState extends State<AddPage> {
                           hintText: "ISBN",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -101,24 +106,27 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.titleController,
+                        controller: editBookController.titleController,
                         keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(color: Colors.black),
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Judul",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (email) {
-                          if (email!.isEmpty) {
+                          if (email == null || email.isEmpty) {
                             return 'Silahkan isi judul Buku';
                           }
                           return null;
@@ -132,20 +140,23 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.subtitleController,
+                        controller: editBookController.subtitleController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Sub Judul",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -162,20 +173,23 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.authorController,
+                        controller: editBookController.authorController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Penulis",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -193,21 +207,24 @@ class _AddPageState extends State<AddPage> {
                       TextFormField(
                           keyboardType: TextInputType.datetime,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          controller: addBookController.publishedController,
+                          controller: editBookController.publishedController,
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 12),
-                            hintText: "Cth : 2022-12-02 00:00:00",
+                            hintText: "Waktu diterbitkan",
                             hintStyle: TextStyle(color: greyColor),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(6)),
-                              borderSide: BorderSide(color: softGreyColor),
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(width: 1.5, color: blueColor),
                             ),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: blueColor)),
+                                borderSide:
+                                    BorderSide(width: 1.6, color: yellowColor)),
                             filled: true,
-                            fillColor: greyLightColor,
+                            fillColor: softBlueColor,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -231,20 +248,23 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.publisherController,
+                        controller: editBookController.publisherController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Penerbit",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -261,21 +281,23 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.pagesController,
-                        keyboardType: TextInputType.number,
+                        controller: editBookController.pagesController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Jumlah Halaman",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -295,20 +317,23 @@ class _AddPageState extends State<AddPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         maxLines: 5,
-                        controller: addBookController.descController,
+                        controller: editBookController.descController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Deskripsi Buku",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -325,20 +350,23 @@ class _AddPageState extends State<AddPage> {
                       const SizedBox(height: 8),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addBookController.webController,
+                        controller: editBookController.webController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 12),
                           hintText: "Website",
                           hintStyle: TextStyle(color: greyColor),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                            borderSide: BorderSide(color: softGreyColor),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(width: 1.5, color: blueColor),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: blueColor)),
+                              borderSide:
+                                  BorderSide(width: 1.6, color: yellowColor)),
                           filled: true,
-                          fillColor: greyLightColor,
+                          fillColor: softBlueColor,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -364,7 +392,7 @@ class _AddPageState extends State<AddPage> {
             ),
           ),
           onPressed: () {
-            addBookController.add();
+            editBookController.edit(widget.book_id);
           },
           child: Text(
             'Submit',

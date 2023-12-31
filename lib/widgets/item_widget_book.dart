@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/getX/controller/book_controller.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/pages/detail_page.dart';
+import 'package:zauhair_nusantara_msib_flutterdeveloper/pages/edit_page.dart';
 import 'package:zauhair_nusantara_msib_flutterdeveloper/theme.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -24,17 +26,21 @@ class ItemBook extends StatelessWidget {
     // final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.to(() => DetailPage(
+              book_id: id,
+            ));
+      },
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           color: whiteColor,
           border: Border(
-            top: BorderSide(color: greyLightColor, width: 3),
-            right: BorderSide(color: greyLightColor, width: 3),
-            left: BorderSide(color: greyLightColor, width: 3),
-            bottom: BorderSide(color: greyLightColor, width: 3),
+            top: BorderSide(color: greyLightColor, width: 1),
+            right: BorderSide(color: greyLightColor, width: 1),
+            left: BorderSide(color: greyLightColor, width: 1),
+            bottom: BorderSide(color: greyLightColor, width: 1),
           ),
         ),
         child: Padding(
@@ -47,11 +53,13 @@ class ItemBook extends StatelessWidget {
                   Container(
                     clipBehavior: Clip.antiAlias,
                     height: 90,
+                    width: 90,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Image.network(
-                      "https://randomuser.me/api/portraits/men/1.jpg",
+                      "https://st2.depositphotos.com/1105977/5461/i/450/depositphotos_54615585-stock-photo-old-books-on-wooden-table.jpg",
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(
@@ -70,8 +78,11 @@ class ItemBook extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Text(
-                          published,
+                          "Published :\n$published",
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge
@@ -84,9 +95,16 @@ class ItemBook extends StatelessWidget {
                   const SizedBox(width: 12),
                   Column(
                     children: [
-                      SvgPicture.asset(
-                        "assets/images/edit_buku.svg",
-                        height: 28,
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => EditPage(
+                                book_id: id,
+                              ));
+                        },
+                        child: SvgPicture.asset(
+                          "assets/images/edit_buku.svg",
+                          height: 28,
+                        ),
                       ),
                       const SizedBox(
                         height: 40,

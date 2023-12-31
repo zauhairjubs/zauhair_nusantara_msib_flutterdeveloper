@@ -33,7 +33,9 @@ class LoginController extends GetxController {
         isLoading.value = false;
         Get.off(() => const Navbar());
       } catch (error) {
-        // Tangani kesalahan
+        Get.rawSnackbar(
+            title: "Akun belum terdaftar",
+            message: "silahkan lakukan registrasi terlebih dahulu");
         print('Error: $error');
       }
     }
@@ -92,7 +94,7 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         await clearTokenFromStorage();
         isLoggedIn.value = false;
-        Get.off(() => const LoginPage());
+        Get.offAll(() => const LoginPage());
       }
     } catch (e) {
       print("Error : $e");
@@ -100,7 +102,6 @@ class LoginController extends GetxController {
   }
 
   Future<void> confirmLogout() async {
-    // Tampilkan dialog konfirmasi
     Get.defaultDialog(
       contentPadding: const EdgeInsets.all(20),
       confirmTextColor: whiteColor,
@@ -110,7 +111,6 @@ class LoginController extends GetxController {
       textCancel: 'Batal',
       onConfirm: () async {
         await logout();
-        CircularProgressIndicator();
       },
     );
   }

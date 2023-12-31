@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Text(
             'Masuk',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: screenHeight * 0.036, fontWeight: FontWeight.w500),
+                fontSize: screenHeight * 0.034, fontWeight: FontWeight.w500),
           ),
         ),
         elevation: 0,
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.024),
+                            .copyWith(fontSize: screenHeight * 0.02),
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: screenHeight * 0.024),
+                            .copyWith(fontSize: screenHeight * 0.02),
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -172,19 +172,14 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     _loginController.login();
                   },
-                  child: _loginController.isLoading.value
-                      ? CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color?>(Colors.white),
-                        )
-                      : Text(
-                          'Masuk',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                  child: Text(
+                    'Masuk',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: screenHeight * 0.018,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
+                  ),
                 ),
                 const SizedBox(height: 28),
                 InkWell(
@@ -201,13 +196,13 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(fontSize: screenHeight * 0.024),
+                            .copyWith(fontSize: screenHeight * 0.02),
                       ),
                       SizedBox(width: 4),
                       Text(
                         'Daftar',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: screenHeight * 0.021,
+                              fontSize: screenHeight * 0.022,
                               fontWeight: FontWeight.w500,
                               color: darkBlueColor,
                             ),
