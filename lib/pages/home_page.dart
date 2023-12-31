@@ -140,9 +140,12 @@ class _HomePageState extends State<HomePage> {
                   return Center(child: CircularProgressIndicator());
                 } else {
                   if (book == null || book.data.isEmpty) {
-                    return Center(
-                        child: Text(
-                            "List Buku Anda masih kosong, Unggah Segera!"));
+                    return Container(
+                        height: screenHeight * 0.55,
+                        child: Center(
+                          child: Text(
+                              "List Buku Anda masih kosong, Unggah Segera!"),
+                        ));
                   } else {
                     return ListView.separated(
                       reverse: true,

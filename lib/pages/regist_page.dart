@@ -25,6 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: transparentColor,
@@ -212,6 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(blueColor),
                     minimumSize: MaterialStateProperty.all(
                       Size(double.infinity, 48),
                     ),
@@ -222,7 +225,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                     'Daftar',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500, color: whiteColor),
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.w500,
+                        color: whiteColor),
                   ),
                 ),
                 const SizedBox(height: 24),

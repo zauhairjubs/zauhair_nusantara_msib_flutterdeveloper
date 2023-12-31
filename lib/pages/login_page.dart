@@ -172,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(blueColor),
                     minimumSize: MaterialStateProperty.all(
                       Size(double.infinity, 48),
                     ),
