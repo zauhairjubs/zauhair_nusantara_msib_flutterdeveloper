@@ -88,7 +88,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         Obx(
                           () => Text(
-                            "${bookController.author.value} - ${bookController..publisher.value}",
+                            "${bookController.author.value} - ${bookController.publisher.value}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge

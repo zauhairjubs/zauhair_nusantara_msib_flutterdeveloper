@@ -99,6 +99,7 @@ class EditBookController extends GetxController {
       title.value = responseData['title'];
       author.value = responseData['author'];
       publisher.value = responseData['publisher'];
+      description.value = responseData['description'];
     } catch (error) {
       print('Gagal mendapatkan atau menggunakan respons: $error');
     }
